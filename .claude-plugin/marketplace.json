@@ -1,0 +1,17 @@
+{
+  "name": "proxymail-qa",
+  "owner": {
+    "name": "Proxy Mail QA",
+    "email": "hello@proxymail.qa"
+  },
+  "metadata": {
+    "description": "The Proxy Mail QA plugin for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "proxymail-qa",
+      "source": "./",
+      "description": "Disposable test inboxes: create an address, sign up with it, and get the verification code or link back."
+    }
+  ]
+}

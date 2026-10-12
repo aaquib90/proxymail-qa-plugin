@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "proxymail-qa": {
+      "type": "http",
+      "url": "https://api.proxymail.qa/mcp"
+    }
+  }
+}
