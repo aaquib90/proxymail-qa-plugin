@@ -68,5 +68,7 @@ hello@proxymail.qa
 
 ## Licence
 
-MIT. The skill in `skills/proxymail-qa` is the one published at
-`https://proxymail.qa/.well-known/agent-skills/proxymail-qa/SKILL.md`.
+MIT. The skill in `skills/proxymail-qa` is the MCP-only version of the one
+published at `https://proxymail.qa/.well-known/agent-skills/proxymail-qa/SKILL.md`
+(which also covers the REST API with a key): the plugin signs in through the
+browser and never reads a key from the machine.

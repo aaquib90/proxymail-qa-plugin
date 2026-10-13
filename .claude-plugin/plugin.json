@@ -1,7 +1,7 @@
 {
   "name": "proxymail-qa",
   "displayName": "Proxy Mail QA",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Disposable test inboxes for testing sign-up, login-code, magic-link and password-reset emails. Create an address, sign up with it, and get the code or link back without the rest of the email.",
   "author": {
     "name": "Proxy Mail QA",
@@ -11,7 +11,15 @@
   "homepage": "https://proxymail.qa/docs/api",
   "repository": "https://github.com/aaquib90/proxymail-qa-plugin",
   "license": "MIT",
-  "keywords": ["email", "testing", "qa", "otp", "magic-link", "sign-up", "mcp"],
+  "keywords": [
+    "email",
+    "testing",
+    "qa",
+    "otp",
+    "magic-link",
+    "sign-up",
+    "mcp"
+  ],
   "icon": "./assets/logo.png",
   "documentationUrl": "https://proxymail.qa/docs/api",
   "supportUrl": "https://github.com/aaquib90/proxymail-qa-plugin/issues",
