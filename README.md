@@ -42,13 +42,13 @@ paste its setup block into your agent.
 | Tool | What it does |
 | --- | --- |
 | `get_project` | The project it works in: default mail domain and the others, email prefix, limits |
-| `create_address` | A new test address, with a fictional name and username, a date of birth for an `age` (such as `under13`), and a password if asked |
+| `create_address` | A new test address, with a fictional name and username, a date of birth for an `age` (such as `under13`), a `country` (such as `GB`), and a password if asked |
 | `wait_for_code` | Waits up to 30 seconds for a verification or login code |
 | `wait_for_link` | The same for a verify, magic sign-in, invite or password-reset link. `app: true` asks for the link that opens a mobile app (`myapp://…`) |
 | `get_address_variants` | Unusual versions of an address for testing sign-up forms: ones whose mail still arrives (capitals, plus tags with special characters), and invalid ones |
 | `check_delivery` | Explains an address's mail without waiting: what reached it, anything refused, and the likely cause when nothing did |
-| `list_addresses` | The project's addresses, each with its newest code or link |
-| `update_address` | Its first name, last name, username or date of birth if the app changed them, and notes, tags or a label |
+| `list_addresses` | The project's addresses, each with its newest code or link. Filters find a test account made earlier: tags, country, age, saved password or text |
+| `update_address` | Its first name, last name, username, date of birth or country if the app changed them, and notes, tags or a label |
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
 | `delete_address` | Deletes an address and its mail |
 

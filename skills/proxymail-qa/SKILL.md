@@ -14,7 +14,7 @@ This plugin adds the Proxy Mail QA MCP server (tools named `create_address`, `wa
 ## Test a sign-up
 
 1. Check the project with `get_project`. It gives the project's default mail domain and the others available, the prefix addresses start with, and how long they last. Don't assume a domain: the ones in examples here aren't necessarily this project's.
-2. Create an address with `create_address`, with a password if the sign-up form asks for one: `{"label": "Sign-up test", "password": true}`. It also returns a fictional first name, last name and username. The password comes back once, in this result, and is saved on the address so the person can sign in as the test account later. If the form asks for a date of birth, add `"age": "adult"` (or `over21`, `under18`, `under15`, `under13`, `any`, `turns18tomorrow`, `turned18today`): the persona then has `date_of_birth`, YYYY-MM-DD. Write it in the order the form asks for.
+2. Create an address with `create_address`, with a password if the sign-up form asks for one: `{"label": "Sign-up test", "password": true}`. It also returns a fictional first name, last name and username. The password comes back once, in this result, and is saved on the address so the person can sign in as the test account later. If the form asks for a date of birth, add `"age": "adult"` (or `over21`, `under18`, `under15`, `under13`, `any`, `turns18tomorrow`, `turned18today`): the persona then has `date_of_birth`, YYYY-MM-DD. Write it in the order the form asks for. If it asks where they live, or the test is about a region, add `"country": "GB"` (any ISO 3166-1 alpha-2 code).
 3. Fill in the app's form with the address, persona and password, and submit it.
 4. Wait for what the email contains:
    - A code: `wait_for_code` with `{"address": "…"}`
@@ -24,6 +24,10 @@ This plugin adds the Proxy Mail QA MCP server (tools named `create_address`, `wa
 6. Record what the account is for with `update_address` and `notes`.
 
 If the app changes the test account's details, keep the saved ones in step so the person can still sign in as it: save a new password with `set_password` (`{"address": "…", "password": "…"}`, or leave `password` out to generate one, returned once), and a new name or username with `update_address` and `first_name`, `last_name` or `username`.
+
+## Reuse a test account
+
+Before creating another account for a scenario, look for one made earlier, such as an under-18 in GB with a saved password: `list_addresses` with `{"tags": ["age-gate"], "country": "GB", "max_age": 17, "has_password": true}`. Every filter given must match; `search` finds text in the address, label, notes, name or username. Tag accounts with `update_address` so they're easy to find again.
 
 ## Mobile apps in a simulator
 
