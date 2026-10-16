@@ -28,7 +28,8 @@ opens to sign in to Proxy Mail QA and choose a project.
 
 ### Cursor
 
-Install **Proxy Mail QA** from the Cursor Marketplace, then log in to it from
+Click **Add to Cursor** on [Proxy Mail QA's Cursor Directory
+page](https://cursor.directory/plugins/proxymail-qa), then log in to it from
 the MCP section of Cursor Settings.
 
 ### Other agents
