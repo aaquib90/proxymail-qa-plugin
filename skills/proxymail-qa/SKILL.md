@@ -9,7 +9,10 @@ Proxy Mail QA gives you disposable email addresses and hands back the verificati
 
 ## Setup
 
-This plugin adds the Proxy Mail QA MCP server (tools named `create_address`, `wait_for_code`, `wait_for_link`). It signs in through the browser: the first time, ask the person you're working for to run `/mcp`, choose proxymail-qa and Authenticate, then sign in to Proxy Mail QA and choose a project. There's no key to set up.
+This skill uses the Proxy Mail QA MCP server (tools named `create_address`, `wait_for_code`, `wait_for_link`), which the Proxy Mail QA plugin adds. It signs in through the browser, so there's no key to set up. If the tools aren't available yet, ask the person you're working for to connect it, sign in to Proxy Mail QA and choose a project:
+
+- Claude Code: run `/mcp`, choose proxymail-qa and Authenticate.
+- Qoder, Cursor and other tools: connect the proxymail-qa MCP server where the tool lists them, or add the remote MCP server `https://api.proxymail.qa/mcp`. Setup for each tool: https://proxymail.qa/docs/api#agent-setup
 
 ## Test a sign-up
 
@@ -25,13 +28,19 @@ This plugin adds the Proxy Mail QA MCP server (tools named `create_address`, `wa
 
 If the app changes the test account's details, keep the saved ones in step so the person can still sign in as it: save a new password with `set_password` (`{"address": "…", "password": "…"}`, or leave `password` out to generate one, returned once), and a new name or username with `update_address` and `first_name`, `last_name` or `username`.
 
+## Check it worked
+
+- The app shows the account as verified or signed in: read the page, or take a screenshot, after entering the code or opening the link. Don't report success from the code or link alone.
+- `list_addresses` shows the address with the code or link it received, so the person can see the same thing.
+- If the app rejects the code or says the link has expired, have the app send a new email and wait again. If that fails too, report what the app said rather than retrying in a loop.
+
 ## Reuse a test account
 
 Before creating another account for a scenario, look for one made earlier, such as an under-18 in GB with a saved password: `list_addresses` with `{"tags": ["age-gate"], "country": "GB", "max_age": 17, "has_password": true}`. Every filter given must match; `search` finds text in the address, label, notes, name or username. Tag accounts with `update_address` so they're easy to find again.
 
 ## Mobile apps in a simulator
 
-When you can drive a simulator or emulator, test the sign-up there the same way: `create_address` with `password: true`, type the address and password into the app's form, then wait for the code or link. Enter a code by typing it into the app. Open a link on the device, not in a desktop browser, so the app handles it: with your simulator tool's open-URL action, or `xcrun simctl openurl booted '<link>'`; iOS asks "Open in …?" first, so tap Open. If the email has both a web link and one that opens the app (`myapp://…`), the web link comes first: `wait_for_link` with `"app": true` asks for the app one. The simulator's screen can lag a moment: check a screenshot shows what you typed before tapping the button, and take another before deciding a step failed. Only use test accounts on that device. Guide: https://proxymail.qa/docs/ios-agents
+When you can drive a simulator or emulator, test the sign-up there the same way: `create_address` with `password: true`, type the address and password into the app's form, then wait for the code or link. Enter a code by typing it into the app. Open a link on the device, not in a desktop browser, so the app handles it: with your simulator tool's open-URL action, or by running `xcrun simctl openurl booted` with the link; iOS asks "Open in …?" first, so tap Open. If the email has both a web link and one that opens the app (`myapp://…`), the web link comes first: `wait_for_link` with `"app": true` asks for the app one. The simulator's screen can lag a moment: check a screenshot shows what you typed before tapping the button, and take another before deciding a step failed. Only use test accounts on that device. Guide: https://proxymail.qa/docs/ios-agents
 
 ## Unusual addresses
 

@@ -1,0 +1,21 @@
+{
+  "name": "proxymail-qa",
+  "owner": {
+    "name": "Proxy Mail QA",
+    "email": "hello@proxymail.qa",
+    "url": "https://proxymail.qa"
+  },
+  "metadata": {
+    "description": "The Proxy Mail QA plugin for Qoder",
+    "version": "1.2.1"
+  },
+  "plugins": [
+    {
+      "name": "proxymail-qa",
+      "source": "./",
+      "description": "Disposable test inboxes: create an address, sign up with it, and get the verification code or link back.",
+      "category": "testing",
+      "tags": ["email", "testing", "qa", "mcp"]
+    }
+  ]
+}

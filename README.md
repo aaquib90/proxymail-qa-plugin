@@ -5,7 +5,7 @@ inboxes for testing sign-up, login-code, magic-link and password-reset emails.
 Your agent creates an address, signs up with it in the app you're building, and
 gets the verification code or link back, without the rest of the email.
 
-This plugin adds, for Claude Code and Cursor:
+This plugin adds, for Claude Code, Cursor and Qoder:
 
 - **The Proxy Mail QA MCP server** at `https://api.proxymail.qa/mcp`. It signs
   in through your browser: you choose one project and allow it, with no API key
@@ -31,6 +31,31 @@ opens to sign in to Proxy Mail QA and choose a project.
 Click **Add to Cursor** on [Proxy Mail QA's Cursor Directory
 page](https://cursor.directory/plugins/proxymail-qa), then log in to it from
 the MCP section of Cursor Settings.
+
+### Qoder
+
+In Qoder, open **Extensions → Plugins**, search for **Proxy Mail QA** and
+choose **Install**. With the Qoder CLI:
+
+```
+qoder plugins marketplace add aaquib90/proxymail-qa-plugin
+qoder plugins install proxymail-qa@proxymail-qa
+```
+
+The first time the agent uses a tool, Qoder opens your browser to sign in to
+Proxy Mail QA and choose a project.
+
+### The skill on its own
+
+To add just the skill to Claude Code, Codex, Cursor, OpenCode and other agents
+that read skills ([skills.sh](https://skills.sh/aaquib90/proxymail-qa-plugin/proxymail-qa)):
+
+```
+npx skills add aaquib90/proxymail-qa-plugin
+```
+
+The skill uses the MCP server, so connect it too: see the [setup
+guide](https://proxymail.qa/docs/api#agent-setup).
 
 ### Other agents
 
