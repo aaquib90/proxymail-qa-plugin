@@ -5,7 +5,7 @@ description: Test sign-up, email verification, login-code (OTP), magic-link, pas
 
 # Testing email flows with Proxy Mail QA
 
-Proxy Mail QA gives you disposable email addresses and hands back the verification code or link from each email that arrives, without the rest of the email.
+Proxy Mail QA gives you disposable email addresses and hands back the verification code or link from each email that arrives, without the rest of the email. It supplies the inbox and the details for a sign-up form; it doesn't create accounts in the app or fill in its forms. You sign up in the app with your own browser or app tools.
 
 ## Setup
 
@@ -18,7 +18,7 @@ This skill uses the Proxy Mail QA MCP server (tools named `create_address`, `wai
 
 1. Check the project with `get_project`. It gives the project's default mail domain and the others available, the prefix addresses start with, and how long they last. Don't assume a domain: the ones in examples here aren't necessarily this project's.
 2. Create an address with `create_address`, with a password if the sign-up form asks for one: `{"label": "Sign-up test", "password": true}`. It also returns a fictional first name, last name and username. The password comes back once, in this result, and is saved on the address so the person can sign in as the test account later. If the form asks for a date of birth, add `"age": "adult"` (or `over21`, `under18`, `under15`, `under13`, `any`, `turns18tomorrow`, `turned18today`): the persona then has `date_of_birth`, YYYY-MM-DD. Write it in the order the form asks for. If it asks where they live, or the test is about a region, add `"country": "GB"` (any ISO 3166-1 alpha-2 code).
-3. Fill in the app's form with the address, persona and password, and submit it.
+3. Fill in the app's form with the address, persona and password, and submit it. For a form with more than an email field (a username with rules, a date of birth, a country drop-down), use `form_values` instead of `create_address`: send what the page says about each field (`id`, `type`, `name`, `label`, `placeholder`, `autocomplete`, `pattern`, `min_length`, `max_length`, and a drop-down's `options`), and it returns the value for each field from a new address made for the form, its password included. You still fill in the form and submit it.
 4. Wait for what the email contains:
    - A code: `wait_for_code` with `{"address": "…"}`
    - A link: `wait_for_link` with `{"address": "…"}`, and `kind` `reset` or `magic_signin` for those emails
@@ -48,15 +48,15 @@ To check the app accepts valid but unusual email addresses, call `get_address_va
 
 ## Check the emails, not just the code
 
-After a wait returns, `check_email` with `{"address": "…", "since": "…", "expect_host": "staging.example.com"}` checks SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry and its size. It returns verdicts, never the email. `count_emails` catches duplicates (exactly one verification email, not two), and `expect_no_email` checks that an action sends nothing, such as a second reset request that should be rate-limited. To get a second code without moving `since`, pass `"unused": true` to the wait.
+After a wait returns, `check_email` with `{"address": "…", "since": "…", "expect_host": "staging.example.com"}` checks SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry, its size and whether it fits a phone. Add `"expect_text": ["Hi Maya"]` for phrases it should contain, and `"expect_language": "de"` for a localised email. It returns verdicts, never the email. `count_emails` catches duplicates (exactly one verification email, not two), and `expect_no_email` checks that an action sends nothing, such as a second reset request that should be rate-limited. To get a second code without moving `since`, pass `"unused": true` to the wait.
 
 ## Borrow an account in a known state
 
-For a test that needs an existing account, such as a verified premium user, `check_out_account` with `{"tags": ["verified", "premium"]}` lends one that no other test has. Give it back with `return_account` and its `checkout.token`, adding or removing tags for what the test changed (`"add_tags": ["cancelled"], "remove_tags": ["premium"]`).
+For a test that needs an existing account, such as a verified premium user, `check_out_account` with `{"tags": ["verified", "premium"]}` lends one that no other test has. Give it back with `return_account` and its `checkout.token`, adding or removing tags for what the test changed (`"add_tags": ["cancelled"], "remove_tags": ["premium"]`). Tags are a claim about the account's state in the app: the `prepare_account` prompt confirms it in the app with your browser tools, makes a new account when none is free, and puts it back afterwards.
 
 ## Leave a report
 
-Call `start_run` first and pass its `run_id` to the tools above; `finish_run` returns a Markdown report to show the person or paste into the pull request. The prompts `test_signup_flow`, `test_password_reset`, `test_sign_in_code` and `audit_auth_emails` are ready-made checklists that do all of this.
+Call `start_run` first and pass its `run_id` to the tools above, with `test` naming the step each call belongs to; `finish_run` returns a Markdown report to show the person or paste into the pull request, and compares the run with the last ones of the same name. The prompts `test_signup_flow`, `test_password_reset`, `test_sign_in_code` and `audit_auth_emails` are ready-made checklists that do all of this, `prepare_account` gets an account ready for a test, and `auth_regression_pack` checks sign-up, reset and invitation links the same way every time (also the `auth-regression-pack` skill in this plugin).
 
 ## When nothing arrives
 

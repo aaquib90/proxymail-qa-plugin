@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "The Proxy Mail QA plugin for Qoder",
-    "version": "1.3.0"
+    "version": "1.4.0"
   },
   "plugins": [
     {
