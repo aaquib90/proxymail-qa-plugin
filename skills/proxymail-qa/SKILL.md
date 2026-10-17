@@ -46,6 +46,18 @@ When you can drive a simulator or emulator, test the sign-up there the same way:
 
 To check the app accepts valid but unusual email addresses, call `get_address_variants` with `{"address": "…"}`. Its `delivered` list has versions whose mail still arrives in the address's inbox: capitals, a plus tag with an apostrophe or other special characters, the longest name allowed. Sign up with one, then wait on that same variant; tools accept a variant wherever they take an address. `invalid` lists addresses the app should reject.
 
+## Check the emails, not just the code
+
+After a wait returns, `check_email` with `{"address": "…", "since": "…", "expect_host": "staging.example.com"}` checks SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry and its size. It returns verdicts, never the email. `count_emails` catches duplicates (exactly one verification email, not two), and `expect_no_email` checks that an action sends nothing, such as a second reset request that should be rate-limited. To get a second code without moving `since`, pass `"unused": true` to the wait.
+
+## Borrow an account in a known state
+
+For a test that needs an existing account, such as a verified premium user, `check_out_account` with `{"tags": ["verified", "premium"]}` lends one that no other test has. Give it back with `return_account` and its `checkout.token`, adding or removing tags for what the test changed (`"add_tags": ["cancelled"], "remove_tags": ["premium"]`).
+
+## Leave a report
+
+Call `start_run` first and pass its `run_id` to the tools above; `finish_run` returns a Markdown report to show the person or paste into the pull request. The prompts `test_signup_flow`, `test_password_reset`, `test_sign_in_code` and `audit_auth_emails` are ready-made checklists that do all of this.
+
 ## When nothing arrives
 
 A wait that finds nothing says why, as far as Proxy Mail QA can tell: `found: false` with a `message`, a `refused` list and a `help` link. To check an address at any time without waiting, use `check_delivery` with `{"address": "…"}`.

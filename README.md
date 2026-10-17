@@ -77,6 +77,13 @@ paste its setup block into your agent.
 | `update_address` | Its first name, last name, username, date of birth or country if the app changed them, and notes, tags or a label |
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
 | `delete_address` | Deletes an address and its mail |
+| `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry and its size. Verdicts only, never the email |
+| `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives |
+| `check_out_account`, `return_account` | Borrow a test account in a known state that no other test has, and give it back |
+| `start_run`, `add_run_note`, `finish_run` | Record a session as a run; `finish_run` returns the report in Markdown for a pull request |
+
+Prompts, ready-made checklists that end in a report: `test_signup_flow`,
+`test_password_reset`, `test_sign_in_code` and `audit_auth_emails`.
 
 Then ask in plain words: "Sign up on localhost:3000 with a new Proxy Mail QA
 address and confirm the email."
