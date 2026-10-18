@@ -70,16 +70,17 @@ paste its setup block into your agent.
 | Tool | What it does |
 | --- | --- |
 | `get_project` | The project it works in: default mail domain and the others, email prefix, limits |
-| `create_address` | A new test address, with a fictional name and username, a date of birth for an `age` (such as `under13`), a `country` (such as `GB`), and a password if asked |
+| `create_address` | A new test address, with a fictional name and username, a date of birth for an `age` (such as `under13`), a `country` (such as `GB`), and a password if asked; `site` and `environment` record where it's used |
 | `form_values` | For a form with more than an email field: what to type or pick in each field, from a new address made for it (a username and password that fit the rules, the date of birth in the field's format, a country the drop-down offers). The agent fills in the form |
 | `wait_for_code` | Waits up to 30 seconds for a verification or login code |
 | `wait_for_link` | The same for a verify, magic sign-in, invite or password-reset link. `app: true` asks for the link that opens a mobile app (`myapp://…`) |
 | `get_address_variants` | Unusual versions of an address for testing sign-up forms: ones whose mail still arrives (capitals, plus tags with special characters), and invalid ones |
 | `check_delivery` | Explains an address's mail without waiting: what reached it, anything refused, and the likely cause when nothing did |
-| `list_addresses` | The project's addresses, each with its newest code or link. Filters find a test account made earlier: tags, country, age, saved password or text |
+| `list_addresses` | The project's addresses, each with its newest code or link. Filters find a test account made earlier: tags, country, age, saved password, text, site or environment |
 | `update_address` | Its first name, last name, username, date of birth or country if the app changed them, and notes, tags or a label |
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
 | `delete_address` | Deletes an address and its mail |
+| `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry, its size, whether it fits a phone, and the text and language you expect. Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives |
 | `check_out_account`, `return_account` | Borrow a test account in a known state that no other test has, and give it back |
