@@ -83,7 +83,7 @@ paste its setup block into your agent.
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry, its size, whether it fits a phone, and the text and language you expect. Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives |
-| `check_out_account`, `return_account` | Borrow a test account in a known state that no other test has, and give it back |
+| `check_out_account`, `extend_checkout`, `return_account` | Borrow a test account in a known state that no other test has, hold it longer if needed, and give it back |
 | `start_run`, `add_run_note`, `finish_run` | Record a session as a run, each call naming its step (`test`); `finish_run` returns the report in Markdown for a pull request, compared with the last runs of the same name |
 
 Prompts, ready-made checklists: `test_signup_flow`, `test_password_reset`,
