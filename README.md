@@ -89,7 +89,7 @@ paste its setup block into your agent.
 Prompts, ready-made checklists: `test_signup_flow`, `test_password_reset`,
 `test_sign_in_code`, `prepare_account` (an account confirmed to be in the state
 a test needs), `auth_regression_pack` (the same checks every time, compared
-with the last runs) and `audit_auth_emails`.
+with the last runs), `audit_auth_emails` and `audit_marketing_emails`.
 
 Then ask in plain words: "Sign up on localhost:3000 with a new Proxy Mail QA
 address and confirm the email."
