@@ -9,6 +9,7 @@
 # still names another platform.
 set -eu
 cd "$(dirname "$0")/.."
+./scripts/check-submission.sh
 version=$(sed -n 's/^  "version": "\(.*\)",$/\1/p' .qoder-plugin/plugin.json)
 out="$PWD/dist/proxymail-qa-qoder-$version.zip"
 stage=$(mktemp -d)
