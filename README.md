@@ -10,9 +10,11 @@ This plugin adds, for Claude Code, Cursor and Qoder:
 - **The Proxy Mail QA MCP server** at `https://api.proxymail.qa/mcp`. It signs
   in through your browser: you choose one project and allow it, with no API key
   to copy.
-- **Two skills**: `proxymail-qa` walks the agent through testing a sign-up end
-  to end, and `auth-regression-pack` checks sign-up, password reset and
-  invitations the same way every time, including reused and replaced links.
+- **Three skills**: `proxymail-qa` walks the agent through testing a sign-up end
+  to end, `auth-regression-pack` checks sign-up, password reset and
+  invitations the same way every time, including reused and replaced links,
+  and `marketing-email-testing` tests welcome coupons and checkout, one offer
+  per person, unsubscribing, consent rules by country and spam risk.
 
 It works on the Free plan.
 
