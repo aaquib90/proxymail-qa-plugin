@@ -50,6 +50,10 @@ To check the app accepts valid but unusual email addresses, call `get_address_va
 
 After a wait returns, `check_email` with `{"address": "…", "since": "…", "expect_host": "staging.example.com"}` checks SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry, its size and whether it fits a phone. Add `"expect_text": ["Hi Maya"]` for phrases it should contain, and `"expect_language": "de"` for a localised email. It returns verdicts, never the email. If the app under test runs on the person's machine (localhost:3000, say), its links point there on purpose: mark it once with `mark_dev_host` and `{"host": "localhost:3000"}`, and links to it pass. `count_emails` catches duplicates (exactly one verification email, not two), and `expect_no_email` checks that an action sends nothing, such as a second reset request that should be rate-limited. To get a second code without moving `since`, pass `"unused": true` to the wait.
 
+## Coupons and offers
+
+After signing up for an offer (a welcome discount, a newsletter coupon), wait for the coupon itself: `wait_for_code` with `{"address": "…", "kind": "coupon", "since": "…"}`. It returns the code with `discount` ("20% off") and `valid_until` when the email states them, and `after_seconds`, how long after `since` it came. Offers often take minutes: call again rather than giving up after one wait. To check it came in time, `check_email` with `"expect_within": "5m"`.
+
 ## Sign in again as a test account
 
 If your connection has the `get_sign_in` tool (it appears only where the person allowed reading saved passwords), `{"site": "staging.example.com", "tags": ["verified"]}` returns the account to sign in with and its password in one call: one with a saved password and every tag given, that no test has checked out, the one used on this site first. Without it, find the account with `list_addresses` and `has_password: true`, and ask the person to sign in as it.
