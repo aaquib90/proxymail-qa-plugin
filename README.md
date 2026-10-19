@@ -83,6 +83,7 @@ paste its setup block into your agent.
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect. Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives (`until` for up to an hour); `category: marketing` looks at marketing email only |
+| `record_coupon_result` | What checkout did with a coupon the agent applied on staging: accepted, rejected or an error, with the app's message and a verdict |
 | `check_offers` | Each sender's coupons and which version of the address (plain, capitals, `+tag`) each went to: whether one person got an offer twice |
 | `mark_unsubscribed`, `mark_resubscribed`, `check_unsubscribe` | Record that the address unsubscribed from a sender (after the agent did it in its browser), and list any marketing email that came after |
 | `check_out_account`, `extend_checkout`, `return_account` | Borrow a test account in a known state that no other test has, hold it longer if needed, and give it back |
@@ -91,7 +92,7 @@ paste its setup block into your agent.
 Prompts, ready-made checklists: `test_signup_flow`, `test_password_reset`,
 `test_sign_in_code`, `prepare_account` (an account confirmed to be in the state
 a test needs), `auth_regression_pack` (the same checks every time, compared
-with the last runs), `audit_auth_emails`, `audit_marketing_emails`, `test_unsubscribe` and `test_offer_reuse`.
+with the last runs), `audit_auth_emails`, `audit_marketing_emails`, `test_unsubscribe`, `test_offer_reuse` and `test_coupon_checkout`.
 
 Then ask in plain words: "Sign up on localhost:3000 with a new Proxy Mail QA
 address and confirm the email."
