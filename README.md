@@ -73,7 +73,7 @@ paste its setup block into your agent.
 | `create_address` | A new test address, with a fictional name and username, a date of birth for an `age` (such as `under13`), a `country` (such as `GB`), and a password if asked; `site` and `environment` record where it's used |
 | `form_values` | For a form with more than an email field: what to type or pick in each field, from a new address made for it (a username and password that fit the rules, the date of birth in the field's format, a country the drop-down offers). The agent fills in the form |
 | `wait_for_code` | Waits up to 30 seconds for a verification or login code, or with `kind: coupon` an offer's coupon with its discount and valid-until date |
-| `wait_for_link` | The same for a verify, magic sign-in, invite or password-reset link. `app: true` asks for the link that opens a mobile app (`myapp://…`) |
+| `wait_for_link` | The same for a verify, magic sign-in, invite or password-reset link, or with `kind: unsubscribe` (or `list_unsubscribe`) the email's unsubscribe link. `app: true` asks for the link that opens a mobile app (`myapp://…`) |
 | `get_address_variants` | Unusual versions of an address for testing sign-up forms: ones whose mail still arrives (capitals, plus tags with special characters), and invalid ones |
 | `check_delivery` | Explains an address's mail without waiting: what reached it, anything refused, and the likely cause when nothing did |
 | `list_addresses` | The project's addresses, each with its newest code or link. Filters find a test account made earlier: tags, country, age, saved password, text, site or environment |
@@ -81,8 +81,8 @@ paste its setup block into your agent.
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
 | `delete_address` | Deletes an address and its mail |
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
-| `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry, its size, whether it fits a phone, and the text and language you expect. Verdicts only, never the email |
-| `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives |
+| `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect. Verdicts only, never the email |
+| `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives; `category: marketing` looks at marketing email only |
 | `check_out_account`, `extend_checkout`, `return_account` | Borrow a test account in a known state that no other test has, hold it longer if needed, and give it back |
 | `start_run`, `add_run_note`, `finish_run` | Record a session as a run, each call naming its step (`test`); `finish_run` returns the report in Markdown for a pull request, compared with the last runs of the same name |
 

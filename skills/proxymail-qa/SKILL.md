@@ -52,7 +52,11 @@ After a wait returns, `check_email` with `{"address": "…", "since": "…", "ex
 
 ## Coupons and offers
 
-After signing up for an offer (a welcome discount, a newsletter coupon), wait for the coupon itself: `wait_for_code` with `{"address": "…", "kind": "coupon", "since": "…"}`. It returns the code with `discount` ("20% off") and `valid_until` when the email states them, and `after_seconds`, how long after `since` it came. Offers often take minutes: call again rather than giving up after one wait. To check it came in time, `check_email` with `"expect_within": "5m"`.
+After signing up for an offer (a welcome discount, a newsletter coupon), wait for the coupon itself: `wait_for_code` with `{"address": "…", "kind": "coupon", "since": "…"}`. It returns the code with `discount` ("20% off") and `valid_until` when the email states them, and `after_seconds`, how long after `since` it came. Offers often take minutes: call again rather than giving up after one wait. To check it came in time, `check_email` with `"expect_within": "5m"`; its `coupon_expiry` check warns when the email doesn't say when the coupon ends.
+
+## Newsletters, unsubscribing and receipts
+
+Each email is typed `auth`, `transactional` (receipts, orders, bookings, security notices) or `marketing`. Pass `"category": "marketing"` to `count_emails`, `expect_no_email` or `check_email` to look at marketing only. To test unsubscribing, `wait_for_link` with `"kind": "unsubscribe"` returns the email's own unsubscribe link, and `"kind": "list_unsubscribe"` the List-Unsubscribe header's one-click URL. Proxy Mail QA never opens them: open the link in your own browser on the staging site, or POST `List-Unsubscribe=One-Click` to the one-click URL as an inbox's button does. Then trigger another campaign and `expect_no_email` with `"category": "marketing"`, while a receipt or password reset should still arrive. `check_email` with `"expect_attachment": [".pdf"]` checks an invoice is attached; only each file's type, extension and size are kept.
 
 ## Sign in again as a test account
 
