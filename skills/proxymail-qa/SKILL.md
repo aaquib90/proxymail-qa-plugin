@@ -52,7 +52,7 @@ After a wait returns, `check_email` with `{"address": "…", "since": "…", "ex
 
 ## Coupons and offers
 
-After signing up for an offer (a welcome discount, a newsletter coupon), wait for the coupon itself: `wait_for_code` with `{"address": "…", "kind": "coupon", "since": "…"}`. It returns the code with `discount` ("20% off") and `valid_until` when the email states them, and `after_seconds`, how long after `since` it came. Offers often take minutes: call again rather than giving up after one wait. To check it came in time, `check_email` with `"expect_within": "5m"`; its `coupon_expiry` check warns when the email doesn't say when the coupon ends.
+After signing up for an offer (a welcome discount, a newsletter coupon), wait for the coupon itself: `wait_for_code` with `{"address": "…", "kind": "coupon", "since": "…"}`. It returns the code with `discount` ("20% off") and `valid_until` when the email states them, and `after_seconds`, how long after `since` it came. Offers often take minutes: call again rather than giving up after one wait. To check it came in time, `check_email` with `"expect_within": "5m"`; its `coupon_expiry` check warns when the email doesn't say when the coupon ends. To check a one-time or welcome offer goes to each person once, sign up again with versions of the same address from `get_address_variants` (`name+promo1@…`, capitals: they reach the same inbox), wait for each coupon, then `check_offers`: `reused` means the app gave one person the offer twice. The `test_offer_reuse` prompt does this.
 
 ## Newsletters, unsubscribing and receipts
 
@@ -68,7 +68,7 @@ For a test that needs an existing account, such as a verified premium user, `che
 
 ## Leave a report
 
-Call `start_run` first and pass its `run_id` to the tools above, with `test` naming the step each call belongs to; `finish_run` returns a Markdown report to show the person or paste into the pull request, and compares the run with the last ones of the same name. The prompts `test_signup_flow`, `test_password_reset`, `test_sign_in_code`, `audit_auth_emails`, `audit_marketing_emails` and `test_unsubscribe` are ready-made checklists that do all of this, `prepare_account` gets an account ready for a test, and `auth_regression_pack` checks sign-up, reset and invitation links the same way every time (also the `auth-regression-pack` skill in this plugin).
+Call `start_run` first and pass its `run_id` to the tools above, with `test` naming the step each call belongs to; `finish_run` returns a Markdown report to show the person or paste into the pull request, and compares the run with the last ones of the same name. The prompts `test_signup_flow`, `test_password_reset`, `test_sign_in_code`, `audit_auth_emails`, `audit_marketing_emails`, `test_unsubscribe` and `test_offer_reuse` are ready-made checklists that do all of this, `prepare_account` gets an account ready for a test, and `auth_regression_pack` checks sign-up, reset and invitation links the same way every time (also the `auth-regression-pack` skill in this plugin).
 
 ## When nothing arrives
 
