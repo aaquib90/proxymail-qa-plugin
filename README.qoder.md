@@ -70,6 +70,13 @@ address, and the plugin's stays signed out.
 | `check_out_account`, `extend_checkout`, `return_account` | Borrow a test account in a known state that no other test has, hold it longer if needed, and give it back |
 | `start_run`, `add_run_note`, `finish_run` | Record a session as a run, each call naming its step (`test`); `finish_run` returns the report in Markdown for a pull request, compared with the last runs of the same name |
 
+The marketing and offer tools (`record_coupon_result`, `check_offers`,
+`mark_unsubscribed`, `mark_resubscribed`, `check_unsubscribe`, `record_consent`,
+`check_sequence`), the marketing checks, and the spam score and attachment
+checks are in Labs for now: switch on **Marketing and offer emails** and **Spam
+score and attachment checks** in the Proxy Mail QA app under Account settings →
+Labs. Until then those tools answer with an error that says so.
+
 The skills above are the ready-made checklists: `proxymail-qa` covers sign-up,
 codes and links, password resets and a borrowed account;
 `auth-regression-pack` the same checks every time, compared with the last runs;
