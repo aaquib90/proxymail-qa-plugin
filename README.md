@@ -95,6 +95,7 @@ paste its setup block into your agent.
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
 | `delete_address` | Deletes an address and its mail |
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
+| `update_project` | Changes the project's name, website, environments, email prefix or default mail domain, for its lead or an organisation owner or admin; logged in the project's activity |
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect; attachments inboxes block (`harmful_attachment`) and an estimate of whether it lands in spam (`spam_risk`). Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives (`until` for up to an hour); `category: marketing` looks at marketing email only |
 | `check_sequence` | Whether a welcome series or drip campaign came in order and on time after sign-up: pass, early, late, missing or waiting for each email |
@@ -105,10 +106,13 @@ paste its setup block into your agent.
 | `check_out_account`, `extend_checkout`, `return_account` | Borrow a test account in a known state that no other test has, hold it longer if needed, and give it back |
 | `start_run`, `add_run_note`, `finish_run` | Record a session as a run, each call naming its step (`test`); `finish_run` returns the report in Markdown for a pull request, compared with the last runs of the same name |
 
-Prompts, ready-made checklists: `test_signup_flow`, `test_password_reset`,
+Prompts, ready-made checklists, in clients that show MCP prompts: `test_signup_flow`, `test_password_reset`,
 `test_sign_in_code`, `prepare_account` (an account confirmed to be in the state
 a test needs), `auth_regression_pack` (the same checks every time, compared
 with the last runs), `audit_auth_emails`, `audit_marketing_emails`, `test_unsubscribe`, `test_offer_reuse`, `test_coupon_checkout` and `audit_marketing_consent`.
+Where prompts aren't shown, the skills cover the same ground: `proxymail-qa`
+(sign-up, codes and links, password resets, a borrowed account),
+`auth-regression-pack`, `account-email-audit` and `marketing-email-testing`.
 
 Then ask in plain words: "Sign up on localhost:3000 with a new Proxy Mail QA
 address and confirm the email."

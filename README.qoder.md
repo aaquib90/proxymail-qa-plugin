@@ -36,7 +36,12 @@ In Qoder, open **Extensions → Plugins**, search for **Proxy Mail QA** and
 choose **Install**.
 
 The first time the agent uses a tool, Qoder opens your browser to sign in to
-Proxy Mail QA and choose a project.
+Proxy Mail QA and choose a project. If the agent can't see Proxy Mail QA's
+tools, sign in to the plugin's server from Qoder's MCP settings.
+
+If you added the Proxy Mail QA server to Qoder by hand before installing the
+plugin, remove that entry: otherwise Qoder lists two servers at the same
+address, and the plugin's stays signed out.
 
 ## What the agent can do
 
@@ -54,6 +59,7 @@ Proxy Mail QA and choose a project.
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
 | `delete_address` | Deletes an address and its mail |
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
+| `update_project` | Changes the project's name, website, environments, email prefix or default mail domain, for its lead or an organisation owner or admin; logged in the project's activity |
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect; attachments inboxes block (`harmful_attachment`) and an estimate of whether it lands in spam (`spam_risk`). Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives (`until` for up to an hour); `category: marketing` looks at marketing email only |
 | `check_sequence` | Whether a welcome series or drip campaign came in order and on time after sign-up: pass, early, late, missing or waiting for each email |
@@ -64,10 +70,12 @@ Proxy Mail QA and choose a project.
 | `check_out_account`, `extend_checkout`, `return_account` | Borrow a test account in a known state that no other test has, hold it longer if needed, and give it back |
 | `start_run`, `add_run_note`, `finish_run` | Record a session as a run, each call naming its step (`test`); `finish_run` returns the report in Markdown for a pull request, compared with the last runs of the same name |
 
-Prompts, ready-made checklists: `test_signup_flow`, `test_password_reset`,
-`test_sign_in_code`, `prepare_account` (an account confirmed to be in the state
-a test needs), `auth_regression_pack` (the same checks every time, compared
-with the last runs), `audit_auth_emails`, `audit_marketing_emails`, `test_unsubscribe`, `test_offer_reuse`, `test_coupon_checkout` and `audit_marketing_consent`.
+The skills above are the ready-made checklists: `proxymail-qa` covers sign-up,
+codes and links, password resets and a borrowed account;
+`auth-regression-pack` the same checks every time, compared with the last runs;
+`account-email-audit` each account email the app sends; and
+`marketing-email-testing` offers, unsubscribing and consent rules. (The server
+also offers them as MCP prompts, for clients that show prompts.)
 
 Then ask in plain words: "Sign up on localhost:3000 with a new Proxy Mail QA
 address and confirm the email."
