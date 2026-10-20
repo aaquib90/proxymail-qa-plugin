@@ -9,7 +9,8 @@ The plugin adds:
 
 - **The Proxy Mail QA MCP server** at `https://api.proxymail.qa/mcp`. It signs
   in through your browser: you choose one project and allow it, with no API key
-  to copy.
+  to copy. No account yet? Create a free one on that same page; it makes your
+  first project and brings you straight back.
 - **Eight skills**, which the agent picks up when a task needs one:
   - `proxymail-qa`: test a sign-up end to end.
   - `auth-regression-pack`: check sign-up, password reset and invitations the
