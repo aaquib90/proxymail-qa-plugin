@@ -10,11 +10,22 @@ The plugin adds:
 - **The Proxy Mail QA MCP server** at `https://api.proxymail.qa/mcp`. It signs
   in through your browser: you choose one project and allow it, with no API key
   to copy.
-- **Three skills**: `proxymail-qa` walks the agent through testing a sign-up end
-  to end, `auth-regression-pack` checks sign-up, password reset and
-  invitations the same way every time, including reused and replaced links,
-  and `marketing-email-testing` tests welcome coupons and checkout, one offer
-  per person, unsubscribing, consent rules by country and spam risk.
+- **Eight skills**, which the agent picks up when a task needs one:
+  - `proxymail-qa`: test a sign-up end to end.
+  - `auth-regression-pack`: check sign-up, password reset and invitations the
+    same way every time, including reused and replaced links.
+  - `account-email-audit`: trigger every account email the app sends and list
+    what to fix.
+  - `signup-form-email-validation`: check the sign-up form accepts valid but
+    unusual addresses and turns away invalid ones.
+  - `age-and-region-testing`: test age gates, parental consent and country
+    rules with accounts of an exact age or country.
+  - `email-delivery-troubleshooting`: find out why a sign-up or reset email
+    isn't arriving, and fix the cause.
+  - `mobile-sign-up-testing`: sign-up, codes and links in iOS and Android
+    apps, in a simulator or emulator.
+  - `marketing-email-testing`: welcome coupons and checkout, one offer per
+    person, unsubscribing, consent rules by country and spam risk.
 
 It works on the Free plan.
 

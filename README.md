@@ -10,11 +10,22 @@ This plugin adds, for Claude Code, Cursor and Qoder:
 - **The Proxy Mail QA MCP server** at `https://api.proxymail.qa/mcp`. It signs
   in through your browser: you choose one project and allow it, with no API key
   to copy.
-- **Three skills**: `proxymail-qa` walks the agent through testing a sign-up end
-  to end, `auth-regression-pack` checks sign-up, password reset and
-  invitations the same way every time, including reused and replaced links,
-  and `marketing-email-testing` tests welcome coupons and checkout, one offer
-  per person, unsubscribing, consent rules by country and spam risk.
+- **Eight skills**, which the agent picks up when a task needs one:
+  - `proxymail-qa`: test a sign-up end to end.
+  - `auth-regression-pack`: check sign-up, password reset and invitations the
+    same way every time, including reused and replaced links.
+  - `account-email-audit`: trigger every account email the app sends and list
+    what to fix.
+  - `signup-form-email-validation`: check the sign-up form accepts valid but
+    unusual addresses and turns away invalid ones.
+  - `age-and-region-testing`: test age gates, parental consent and country
+    rules with accounts of an exact age or country.
+  - `email-delivery-troubleshooting`: find out why a sign-up or reset email
+    isn't arriving, and fix the cause.
+  - `mobile-sign-up-testing`: sign-up, codes and links in iOS and Android
+    apps, in a simulator or emulator.
+  - `marketing-email-testing`: welcome coupons and checkout, one offer per
+    person, unsubscribing, consent rules by country and spam risk.
 
 It works on the Free plan.
 
@@ -49,16 +60,16 @@ qoder plugins install proxymail-qa@proxymail-qa
 The first time the agent uses a tool, Qoder opens your browser to sign in to
 Proxy Mail QA and choose a project.
 
-### The skill on its own
+### The skills on their own
 
-To add just the skill to Claude Code, Codex, Cursor, OpenCode and other agents
+To add just the skills to Claude Code, Codex, Cursor, OpenCode and other agents
 that read skills ([skills.sh](https://skills.sh/aaquib90/proxymail-qa-plugin/proxymail-qa)):
 
 ```
 npx skills add aaquib90/proxymail-qa-plugin
 ```
 
-The skill uses the MCP server, so connect it too: see the [setup
+The skills use the MCP server, so connect it too: see the [setup
 guide](https://proxymail.qa/docs/api#agent-setup).
 
 ### Other agents
@@ -118,6 +129,8 @@ hello@proxymail.qa
 ## Licence
 
 MIT. The skills in `skills/` are the MCP-only versions of the ones published
-at `https://proxymail.qa/.well-known/agent-skills/`, which also cover the REST
-API with a key: the plugin signs in through the browser and never reads a key
+at `https://proxymail.qa/.well-known/agent-skills/` and in
+[proxymail-qa-skills](https://github.com/aaquib90/proxymail-qa-skills), which
+also cover the REST API with a key (email-e2e-tests, for tests in CI, is only
+there): the plugin signs in through the browser and never reads a key
 from the machine.
