@@ -12,20 +12,20 @@ This plugin adds, for Claude Code, Cursor and Qoder:
   to copy. No account yet? Create a free one on that same page; it makes your
   first project and brings you straight back.
 - **Eight skills**, which the agent picks up when a task needs one:
-  - `proxymail-qa`: test a sign-up end to end.
-  - `auth-regression-pack`: check sign-up, password reset and invitations the
+  - **Email flow testing** (`proxymail-qa`): test a sign-up end to end.
+  - **Auth regression pack** (`auth-regression-pack`): check sign-up, password reset and invitations the
     same way every time, including reused and replaced links.
-  - `account-email-audit`: trigger every account email the app sends and list
+  - **Account email audit** (`account-email-audit`): trigger every account email the app sends and list
     what to fix.
-  - `signup-form-email-validation`: check the sign-up form accepts valid but
+  - **Sign-up form email validation** (`signup-form-email-validation`): check the sign-up form accepts valid but
     unusual addresses and turns away invalid ones.
-  - `age-and-region-testing`: test age gates, parental consent and country
+  - **Age and region testing** (`age-and-region-testing`): test age gates, parental consent and country
     rules with accounts of an exact age or country.
-  - `email-delivery-troubleshooting`: find out why a sign-up or reset email
+  - **Email delivery troubleshooting** (`email-delivery-troubleshooting`): find out why a sign-up or reset email
     isn't arriving, and fix the cause.
-  - `mobile-sign-up-testing`: sign-up, codes and links in iOS and Android
+  - **Mobile app sign-up testing** (`mobile-sign-up-testing`): sign-up, codes and links in iOS and Android
     apps, in a simulator or emulator.
-  - `marketing-email-testing`: welcome coupons and checkout, one offer per
+  - **Marketing and offer email testing** (`marketing-email-testing`): welcome coupons and checkout, one offer per
     person, unsubscribing, consent rules by country and spam risk.
 
 It works on the Free plan.
@@ -117,9 +117,9 @@ Prompts, ready-made checklists, in clients that show MCP prompts: `test_signup_f
 `test_sign_in_code`, `prepare_account` (an account confirmed to be in the state
 a test needs), `auth_regression_pack` (the same checks every time, compared
 with the last runs), `audit_auth_emails`, `audit_marketing_emails`, `test_unsubscribe`, `test_offer_reuse`, `test_coupon_checkout` and `audit_marketing_consent`.
-Where prompts aren't shown, the skills cover the same ground: `proxymail-qa`
-(sign-up, codes and links, password resets, a borrowed account),
-`auth-regression-pack`, `account-email-audit` and `marketing-email-testing`.
+Where prompts aren't shown, the skills cover the same ground: Email flow
+testing (sign-up, codes and links, password resets, a borrowed account), Auth
+regression pack, Account email audit, and Marketing and offer email testing.
 
 Then ask in plain words: "Sign up on localhost:3000 with a new Proxy Mail QA
 address and confirm the email."
@@ -143,6 +143,6 @@ hello@proxymail.qa
 MIT. The skills in `skills/` are the MCP-only versions of the ones published
 at `https://proxymail.qa/.well-known/agent-skills/` and in
 [proxymail-qa-skills](https://github.com/aaquib90/proxymail-qa-skills), which
-also cover the REST API with a key (email-e2e-tests, for tests in CI, is only
-there): the plugin signs in through the browser and never reads a key
+also cover the REST API with a key (Email end-to-end tests, for tests in CI,
+is only there): the plugin signs in through the browser and never reads a key
 from the machine.
