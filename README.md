@@ -18,7 +18,7 @@ This plugin adds, for Claude Code, Cursor and Qoder:
   - **Account email audit** (`account-email-audit`): trigger every account email the app sends and list
     what to fix.
   - **Sign-up form email validation** (`signup-form-email-validation`): check the sign-up form accepts valid but
-    unusual addresses and turns away invalid ones.
+    unusual addresses, names and passwords, turns away invalid ones, and stores HTML or SQL in a name as text.
   - **Age and region testing** (`age-and-region-testing`): test age gates, parental consent and country
     rules with accounts of an exact age or country.
   - **Email delivery troubleshooting** (`email-delivery-troubleshooting`): find out why a sign-up or reset email
@@ -89,6 +89,8 @@ paste its setup block into your agent.
 | `wait_for_code` | Waits up to 30 seconds for a verification or login code, or with `kind: coupon` an offer's coupon with its discount and valid-until date |
 | `wait_for_link` | The same for a verify, magic sign-in, invite or password-reset link, or with `kind: unsubscribe` (or `list_unsubscribe`) the email's unsubscribe link. `app: true` asks for the link that opens a mobile app (`myapp://…`) |
 | `get_address_variants` | Unusual versions of an address for testing sign-up forms: ones whose mail still arrives (capitals, plus tags with special characters), valid ones mail servers refuse, and invalid ones |
+| `get_name_variants` | Awkward names for a form's name field (`field`, `max_length`): ones to accept (apostrophes, accents, other scripts, one letter, exactly the maximum), ones to reject, HTML or SQL to store as text, and ones apps differ on |
+| `get_password_variants` | Awkward passwords within the field's rules (`min_length`, `max_length`, `symbols`): the minimum and maximum, each symbol class, spaces, non-ASCII, and ones apps differ on; fresh each call |
 | `check_delivery` | Explains an address's mail without waiting: what reached it, anything refused, and the likely cause when nothing did |
 | `list_addresses` | The project's addresses, each with its newest code or link. Filters find a test account made earlier: tags, country, age, saved password, text, site or environment |
 | `update_address` | Its first name, last name, username, date of birth or country if the app changed them, and notes, tags or a label |

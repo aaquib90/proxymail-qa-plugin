@@ -1,7 +1,7 @@
 {
   "name": "proxymail-qa",
   "displayName": "Proxy Mail QA",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Disposable test inboxes for testing sign-up, login-code, magic-link and password-reset emails. Create an address, sign up with it, and get the code or link back without the rest of the email.",
   "author": {
     "name": "Proxy Mail QA",
