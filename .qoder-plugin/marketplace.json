@@ -13,7 +13,7 @@
     {
       "name": "proxymail-qa",
       "source": "./",
-      "description": "Disposable test inboxes: create an address, sign up with it, and get the verification code or link back.",
+      "description": "Test inboxes for your app's sign-up and login emails: get the code or link, or why none came.",
       "category": "testing",
       "tags": ["email", "testing", "qa", "mcp"]
     }

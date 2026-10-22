@@ -30,6 +30,13 @@ The plugin adds:
 
 It works on the Free plan.
 
+## What to ask
+
+- "Sign up on localhost:3000 with a new test account and confirm the email."
+- "Why isn't my app's verification email arriving?"
+- "Check the password-reset email my app sent to my test address."
+- "Give me a test email for my staging sign-up and tell me the code when it arrives." (When the agent can't open the app, it gives you the address to sign up with and tells you the code.)
+
 ## Install
 
 In Qoder, open **Extensions → Plugins**, search for **Proxy Mail QA** and

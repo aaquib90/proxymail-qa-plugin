@@ -2,7 +2,7 @@
   "name": "proxymail-qa",
   "displayName": "Proxy Mail QA",
   "version": "1.7.0",
-  "description": "Disposable test inboxes for testing sign-up, login-code, magic-link and password-reset emails. Create an address, sign up with it, and get the code or link back without the rest of the email.",
+  "description": "Test inboxes for your app's sign-up, login-code, magic-link and password-reset emails. Get an address, the code or link the moment it arrives (never the rest of the email), and why an email didn't come.",
   "author": {
     "name": "Proxy Mail QA"
   },
