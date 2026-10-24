@@ -99,6 +99,7 @@ paste its setup block into your agent.
 | `get_name_variants` | Awkward names for a form's name field (`field`, `max_length`): ones to accept (apostrophes, accents, other scripts, one letter, exactly the maximum), ones to reject, HTML or SQL to store as text, and ones apps differ on |
 | `get_password_variants` | Awkward passwords within the field's rules (`min_length`, `max_length`, `symbols`): the minimum and maximum, each symbol class, spaces, non-ASCII, and ones apps differ on; fresh each call |
 | `check_delivery` | Explains an address's mail without waiting: what reached it, anything refused, and the likely cause when nothing did |
+| `search_docs` | Searches Proxy Mail QA's docs and guides for how to do something (`query`): setting up a test framework, CI or a mobile app, why an email didn't arrive, plans and limits. Returns passages with their page addresses |
 | `list_addresses` | The project's addresses, each with its newest code or link. Filters find a test account made earlier: tags, country, age, saved password, text, site or environment |
 | `update_address` | Its first name, last name, username, date of birth or country if the app changed them, and notes, tags or a label |
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
