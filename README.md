@@ -11,7 +11,7 @@ This plugin adds, for Claude Code, Cursor and Qoder:
   in through your browser: you choose one project and allow it, with no API key
   to copy. No account yet? Create a free one on that same page; it makes your
   first project and brings you straight back.
-- **Eight skills**, which the agent picks up when a task needs one:
+- **Nine skills**, which the agent picks up when a task needs one:
   - **Email flow testing** (`proxymail-qa`): test a sign-up end to end.
   - **Auth regression pack** (`auth-regression-pack`): check sign-up, password reset and invitations the
     same way every time, including reused and replaced links.
@@ -19,6 +19,8 @@ This plugin adds, for Claude Code, Cursor and Qoder:
     what to fix.
   - **Sign-up form email validation** (`signup-form-email-validation`): check the sign-up form accepts valid but
     unusual addresses, names and passwords, turns away invalid ones, and stores HTML or SQL in a name as text.
+  - **Sign-up form setup** (`sign-up-form-setup`): go through each screen of the sign-up form, list the fields that
+    would be guessed or left empty, such as company size, and save the custom fields you agree to.
   - **Age and region testing** (`age-and-region-testing`): test age gates, parental consent and country
     rules with accounts of an exact age or country.
   - **Email delivery troubleshooting** (`email-delivery-troubleshooting`): find out why a sign-up or reset email
@@ -90,9 +92,9 @@ paste its setup block into your agent.
 
 | Tool | What it does |
 | --- | --- |
-| `get_project` | The project it works in: default mail domain and the others, email prefix, limits |
+| `get_project` | The project it works in: default mail domain and the others, email prefix, limits, its guesses setting and how many custom fields it has |
 | `create_address` | A new test address, with a fictional name and username, a date of birth for an `age` (such as `under13`), a `country` (such as `GB`), and a password if asked; `site` and `environment` record where it's used |
-| `form_values` | For a form with more than an email field: what to type or pick in each field, from a new address made for it (a username and password that fit the rules, the date of birth in the field's format, a country the drop-down offers). The agent fills in the form |
+| `form_values` | For a form with more than an email field: what to type or pick in each field, from a new address made for it (a username and password that fit the rules, the date of birth in the field's format, a country the drop-down offers). The form's own fields, such as company size, come from the project's custom fields, and fields nobody taught get a guess marked as one. Once per screen for a sign-up over several. The agent fills in the form |
 | `wait_for_code` | Waits up to 30 seconds for a verification or login code, or with `kind: coupon` an offer's coupon with its discount and valid-until date |
 | `wait_for_link` | The same for a verify, magic sign-in, invite or password-reset link, or with `kind: unsubscribe` (or `list_unsubscribe`) the email's unsubscribe link. `app: true` asks for the link that opens a mobile app (`myapp://…`) |
 | `get_address_variants` | Unusual versions of an address for testing sign-up forms: ones whose mail still arrives (capitals, plus tags with special characters), valid ones mail servers refuse, and invalid ones |
@@ -105,7 +107,8 @@ paste its setup block into your agent.
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
 | `delete_address` | Deletes an address and its mail |
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
-| `update_project` | Changes the project's name, website, environments, email prefix or default mail domain, for its lead or an organisation owner or admin; logged in the project's activity |
+| `update_project` | Changes the project's name, website, environments, email prefix or default mail domain, for its lead or an organisation owner or admin, and which fields get a guess (`fill_unknown_fields`); logged in the project's activity |
+| `list_custom_fields`, `save_custom_field`, `delete_custom_field` | The project's custom fields: what goes in a sign-up form's own fields, for everyone on the project. The agent saves or removes one only when you ask or agree; where only the project's leads change them, it asks a lead instead |
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect; attachments inboxes block (`harmful_attachment`) and an estimate of whether it lands in spam (`spam_risk`). Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives (`until` for up to an hour); `category: marketing` looks at marketing email only |
 | `check_sequence` | Whether a welcome series or drip campaign came in order and on time after sign-up: pass, early, late, missing or waiting for each email |
