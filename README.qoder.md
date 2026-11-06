@@ -56,7 +56,7 @@ address, and the plugin's stays signed out.
 
 | Tool | What it does |
 | --- | --- |
-| `get_project` | The project it works in: default mail domain and the others, email prefix, limits, its guesses setting and how many custom fields it has |
+| `get_project` | The project it works in: default mail domain and the others, email prefix, limits, its guesses setting, how many custom fields it has, and its sites with their sign-up screens |
 | `create_address` | A new test address, with a fictional name and username, a date of birth for an `age` (such as `under13`), a `country` (such as `GB`), and a password if asked; `site` and `environment` record where it's used |
 | `form_values` | For a form with more than an email field: what to type or pick in each field, from a new address made for it (a username and password that fit the rules, the date of birth in the field's format, a country the drop-down offers). The form's own fields, such as company size, come from the project's custom fields, and fields nobody taught get a guess marked as one. Once per screen for a sign-up over several. The agent fills in the form |
 | `wait_for_code` | Waits up to 30 seconds for a verification or login code, or with `kind: coupon` an offer's coupon with its discount and valid-until date |
@@ -73,6 +73,7 @@ address, and the plugin's stays signed out.
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
 | `update_project` | Changes the project's name, website, environments, email prefix or default mail domain, for its lead or an organisation owner or admin, and which fields get a guess (`fill_unknown_fields`); logged in the project's activity |
 | `list_custom_fields`, `save_custom_field`, `delete_custom_field` | The project's custom fields: what goes in a sign-up form's own fields, for everyone on the project. The agent saves or removes one only when you ask or agree; where only the project's leads change them, it asks a lead instead |
+| `save_signup_screen`, `remove_signup_screen`, `set_multi_step` | A site's list of sign-up screens (pages, or a native app's screens), and whether Proxy Mail QA for Chrome 0.9.0 and later fills each new screen of a sign-up there by itself. The agent changes them only when you ask or agree; where only the project's leads change sites, it asks a lead instead |
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect; attachments inboxes block (`harmful_attachment`) and an estimate of whether it lands in spam (`spam_risk`). Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives (`until` for up to an hour); `category: marketing` looks at marketing email only |
 | `check_sequence` | Whether a welcome series or drip campaign came in order and on time after sign-up: pass, early, late, missing or waiting for each email |

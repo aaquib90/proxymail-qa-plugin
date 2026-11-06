@@ -21,6 +21,13 @@ done
 # directory put a credential-policy hold on an env-var key, 13 Oct 2026).
 grep -rniE 'PROXYMAIL_QA_API_KEY|api key|/v1/|rest api' skills && problem "a skill mentions the REST API or an API key"
 
+# Nor do the install guide and the READMEs, which agents and reviewers read
+# beside the plugin: no key, no Authorization header and no asking the person
+# for a key (llms-install.md asked for one until 6 Nov 2026). The READMEs may
+# still say there's no key to copy, and where connections are listed.
+grep -niE 'PROXYMAIL_QA_API_KEY|authorization|bearer|qa_[A-Za-z0-9_-]{43}' llms-install.md README.md README.qoder.md && problem "the install guide or a README has a key, or tells an agent to send one"
+grep -niE 'api key|/v1/|rest api' llms-install.md && problem "llms-install.md mentions an API key or the REST API"
+
 # No placeholders (Qoder refuses TODO and <your-token>, 17 Oct 2026).
 grep -rnE '<[A-Za-z][A-Za-z0-9_ -]*>|\bTODO\b|\bTBD\b|FIXME' skills README.md README.qoder.md && problem "placeholder text above"
 
