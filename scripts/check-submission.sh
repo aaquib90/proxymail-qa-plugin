@@ -21,6 +21,12 @@ done
 # directory put a credential-policy hold on an env-var key, 13 Oct 2026).
 grep -rniE 'PROXYMAIL_QA_API_KEY|api key|/v1/|rest api' skills && problem "a skill mentions the REST API or an API key"
 
+# Nor do they read anyone's secrets: no secret's variable name, and no
+# "read it from the environment". Claude's plugin directory flagged 1.8.0 as
+# reading a credential from the user's machine beside an MCP server
+# (MCP_FORWARDS_CREDENTIAL_ENV, 5 Nov 2026).
+grep -rnE '[A-Z0-9]+_(API_KEY|TOKEN|SECRET|PASSWORD)\b|[Rr]ead (them|it) from the environment|code and environment' skills && problem "a skill names a secret's variable or reads the environment"
+
 # Nor do the install guide and the READMEs, which agents and reviewers read
 # beside the plugin: no key, no Authorization header and no asking the person
 # for a key (llms-install.md asked for one until 6 Nov 2026). The READMEs may
