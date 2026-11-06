@@ -77,7 +77,7 @@ address, and the plugin's stays signed out.
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect; attachments inboxes block (`harmful_attachment`) and an estimate of whether it lands in spam (`spam_risk`). Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives (`until` for up to an hour); `category: marketing` looks at marketing email only |
 | `check_sequence` | Whether a welcome series or drip campaign came in order and on time after sign-up: pass, early, late, missing or waiting for each email |
-| `record_consent` | What an account agreed to at sign-up, so `check_email` judges its marketing by the rules where the persona lives (EU, UK, US, Canada, Australia) |
+| `record_consent` | What an account agreed to at sign-up, so `check_email` judges its marketing by the rules where the persona lives (EU and EEA, UK, US, Canada, Australia, New Zealand, Switzerland, Japan, South Korea, Singapore and Hong Kong) |
 | `record_coupon_result` | What checkout did with a coupon the agent applied on staging: accepted, rejected or an error, with the app's message and a verdict |
 | `check_offers` | Each sender's coupons and which version of the address (plain, capitals, `+tag`) each went to: whether one person got an offer twice |
 | `mark_unsubscribed`, `mark_resubscribed`, `check_unsubscribe` | Record that the address unsubscribed from a sender (after the agent did it in its browser), and list any marketing email that came after |
@@ -103,8 +103,8 @@ address and confirm the email."
 
 ## Safety
 
-- Results contain only the code or link, the service that sent it and when it
-  expires, never the email's text, so an email can't pass instructions to the
+- Email results contain only the code or link, the service that sent it and when
+  it expires, never the email's text, so an email can't pass instructions to the
   agent.
 - Proxy Mail QA never opens links, so single-use links still work.
 - A connected agent works in one project and can't read passwords saved
