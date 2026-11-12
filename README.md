@@ -11,7 +11,7 @@ This plugin adds, for Claude Code, Cursor and Qoder:
   in through your browser: you choose one project and allow it, with no API key
   to copy. No account yet? Create a free one on that same page; it makes your
   first project and brings you straight back.
-- **Eight skills**, which the agent picks up when a task needs one:
+- **Nine skills**, which the agent picks up when a task needs one:
   - **Email flow testing** (`proxymail-qa`): test a sign-up end to end.
   - **Auth regression pack** (`auth-regression-pack`): check sign-up, password reset and invitations the
     same way every time, including reused and replaced links.
@@ -19,6 +19,8 @@ This plugin adds, for Claude Code, Cursor and Qoder:
     what to fix.
   - **Sign-up form email validation** (`signup-form-email-validation`): check the sign-up form accepts valid but
     unusual addresses, names and passwords, turns away invalid ones, and stores HTML or SQL in a name as text.
+  - **Sign-up form setup** (`sign-up-form-setup`): go through each screen of the sign-up form, list the fields that
+    would be guessed or left empty, such as company size, and save the custom fields you agree to.
   - **Age and region testing** (`age-and-region-testing`): test age gates, parental consent and country
     rules with accounts of an exact age or country.
   - **Email delivery troubleshooting** (`email-delivery-troubleshooting`): find out why a sign-up or reset email
@@ -38,6 +40,10 @@ It works on the Free plan.
 - "Give me a test email for my staging sign-up and tell me the code when it arrives." (When the agent can't open the app, it gives you the address to sign up with and tells you the code.)
 
 ## Install
+
+If you added the Proxy Mail QA server by hand before (with `claude mcp add`, or in
+Cursor's or Qoder's MCP settings), remove that entry first: otherwise your tool
+lists two servers at the same address, and the plugin's stays signed out.
 
 ### Claude Code
 
@@ -90,9 +96,9 @@ paste its setup block into your agent.
 
 | Tool | What it does |
 | --- | --- |
-| `get_project` | The project it works in: default mail domain and the others, email prefix, limits |
+| `get_project` | The project it works in: default mail domain and the others, email prefix, limits, its guesses setting, how many custom fields it has, and its sites with their sign-up screens |
 | `create_address` | A new test address, with a fictional name and username, a date of birth for an `age` (such as `under13`), a `country` (such as `GB`), and a password if asked; `site` and `environment` record where it's used |
-| `form_values` | For a form with more than an email field: what to type or pick in each field, from a new address made for it (a username and password that fit the rules, the date of birth in the field's format, a country the drop-down offers). The agent fills in the form |
+| `form_values` | For a form with more than an email field: what to type or pick in each field, from a new address made for it (a username and password that fit the rules, the date of birth in the field's format, a country the drop-down offers). The form's own fields, such as company size, come from the project's custom fields, and fields nobody taught get a guess marked as one. Once per screen for a sign-up over several. The agent fills in the form |
 | `wait_for_code` | Waits up to 30 seconds for a verification or login code, or with `kind: coupon` an offer's coupon with its discount and valid-until date |
 | `wait_for_link` | The same for a verify, magic sign-in, invite or password-reset link, or with `kind: unsubscribe` (or `list_unsubscribe`) the email's unsubscribe link. `app: true` asks for the link that opens a mobile app (`myapp://…`) |
 | `get_address_variants` | Unusual versions of an address for testing sign-up forms: ones whose mail still arrives (capitals, plus tags with special characters), valid ones mail servers refuse, and invalid ones |
@@ -105,11 +111,13 @@ paste its setup block into your agent.
 | `set_password` | Saves the password the test account uses now, after the app changed or reset it |
 | `delete_address` | Deletes an address and its mail |
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
-| `update_project` | Changes the project's name, website, environments, email prefix or default mail domain, for its lead or an organisation owner or admin; logged in the project's activity |
+| `update_project` | Changes the project's name, website, environments, email prefix or default mail domain, for its lead or an organisation owner or admin, and which fields get a guess (`fill_unknown_fields`); logged in the project's activity |
+| `list_custom_fields`, `save_custom_field`, `delete_custom_field`, `set_custom_field_enabled`, `set_standard_field` | The project's custom fields: what goes in a sign-up form's own fields, for everyone on the project. A custom field, or the standard Company, First name, Last name or Full name field, can be turned off, and a box whose field is off stays empty. The agent saves, removes or switches one only when you ask or agree; where only the project's leads change them, it asks a lead instead |
+| `add_site`, `save_signup_screen`, `remove_signup_screen`, `set_multi_step` | Adds a staging, dev or local site to the project (never one that looks live, which you add in the app), a site's list of sign-up screens (pages, or a native app's screens), and whether Proxy Mail QA for Chrome 0.9.0 and later fills each new screen of a sign-up there by itself. Adding a site never gives Chrome access: you allow that once, from Proxy Mail QA for Chrome on the site. The agent changes them only when you ask or agree; where only the project's leads change sites, it asks a lead instead |
 | `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect; attachments inboxes block (`harmful_attachment`) and an estimate of whether it lands in spam (`spam_risk`). Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives (`until` for up to an hour); `category: marketing` looks at marketing email only |
 | `check_sequence` | Whether a welcome series or drip campaign came in order and on time after sign-up: pass, early, late, missing or waiting for each email |
-| `record_consent` | What an account agreed to at sign-up, so `check_email` judges its marketing by the rules where the persona lives (EU, UK, US, Canada, Australia) |
+| `record_consent` | What an account agreed to at sign-up, so `check_email` judges its marketing by the rules where the persona lives (EU and EEA, UK, US, Canada, Australia, New Zealand, Switzerland, Japan, South Korea, Singapore and Hong Kong) |
 | `record_coupon_result` | What checkout did with a coupon the agent applied on staging: accepted, rejected or an error, with the app's message and a verdict |
 | `check_offers` | Each sender's coupons and which version of the address (plain, capitals, `+tag`) each went to: whether one person got an offer twice |
 | `mark_unsubscribed`, `mark_resubscribed`, `check_unsubscribe` | Record that the address unsubscribed from a sender (after the agent did it in its browser), and list any marketing email that came after |
@@ -136,8 +144,8 @@ address and confirm the email."
 
 ## Safety
 
-- Results contain only the code or link, the service that sent it and when it
-  expires, never the email's text, so an email can't pass instructions to the
+- Email results contain only the code or link, the service that sent it and when
+  it expires, never the email's text, so an email can't pass instructions to the
   agent.
 - Proxy Mail QA never opens links, so single-use links still work.
 - A connected agent works in one project and can't read passwords saved
