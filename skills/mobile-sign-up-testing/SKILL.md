@@ -24,8 +24,8 @@ The app's email provider must be able to send to any address. In sandbox or test
 3. Tap into the sign-up form and type the address and password. The screen can lag a moment: check a screenshot shows what was typed before tapping the button.
 4. Wait with `wait_for_code`, or `wait_for_link` for a link, with `since` set to the time just before you tapped the button. Each waits up to 30 seconds.
 5. Type the code into the app. If the app shows one box per digit, tap the first box and type the whole code: most move to the next box on each digit. If a box keeps only one digit and focus doesn't move, fill each box in order. Check every digit is in place before submitting: a partial code counts as a wrong attempt. Or open the link on the device, not in a desktop browser, so the app handles it:
-   - iOS Simulator: `xcrun simctl openurl booted "$LINK"`, with the link in the `LINK` shell variable. For a custom scheme, iOS first asks "Open in …?": tap Open.
-   - Android emulator: `adb shell "am start -W -a android.intent.action.VIEW -d '$LINK'"` (the inner quotes keep `&` in the link from splitting the command on the device).
+   - iOS Simulator: `xcrun simctl openurl booted` followed by the link in double quotes. For a custom scheme, iOS first asks "Open in …?": tap Open.
+   - Android emulator: `adb shell "am start -W -a android.intent.action.VIEW -d '…'"`, with the link in place of `…` inside the single quotes (they keep `&` in the link from splitting the command on the device).
    - A simulator tool's own open-URL action works too.
 6. Take a screenshot and check the app shows the account as verified or signed in, on the right screen. Take another before deciding a step failed.
 7. Check the email itself with `check_email` and `"expect_host"` set to the domain the app's links open (its Universal Link or App Link domain), and `count_emails` for a duplicate. When the app runs against a server on the computer (`localhost:3000`, or `10.0.2.2:3000` from the Android emulator), mark that host once with `mark_dev_host`, so its links pass.
@@ -40,7 +40,7 @@ If the email has both a web link and one that opens the app (`myapp://…`), the
 
 | Tests | Open the link with | Helper and full example |
 | --- | --- | --- |
-| Maestro (iOS, Android, React Native, Flutter) | `- openLink: ${output.link}` | https://proxymail.qa/docs/maestro |
+| Maestro (iOS, Android, React Native, Flutter) | `openLink` with the link the helper script returns as `output.link` | https://proxymail.qa/docs/maestro |
 | XCUITest (Swift) | `XCUIApplication().open(url)` | https://proxymail.qa/docs/xcuitest |
 | Espresso or UI Automator (Kotlin) | `startActivity` with an `ACTION_VIEW` intent | https://proxymail.qa/docs/espresso |
 | Flutter `integration_test` (Dart) | A widget test can't open a link the way the phone does: use Maestro or Patrol, or the simulator and emulator commands above | https://proxymail.qa/docs/flutter |
