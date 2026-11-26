@@ -113,7 +113,7 @@ paste its setup block into your agent.
 | `delete_address` | Deletes an address and its mail |
 | `get_cleanup_list` | Every test address the project used in a time range (the last 30 days unless you say, up to 90 days back), live, expired or deleted, with the site it was used on and whether email reached it, and the mail domains they end in, so the agent can delete those test users through your app's own admin or user list afterwards. Proxy Mail QA never touches your app |
 | `mark_dev_host` | Marks a host such as `localhost:3000` as a dev environment, so `check_email` passes links to it |
-| `update_project` | Changes the project's name, website, environments, email prefix or default mail domain, for its lead or an organisation owner or admin, and which fields get a guess (`fill_unknown_fields`); logged in the project's activity |
+| `update_project` | Changes the project's name, website, environments, email prefix, default mail domain, what it tests (`areas`) or its spam checks (`spam_checks`), for its lead or an organisation owner or admin, and which fields get a guess (`fill_unknown_fields`); logged in the project's activity |
 | `list_custom_fields`, `save_custom_field`, `delete_custom_field`, `set_custom_field_enabled`, `set_standard_field` | The project's custom fields: what goes in a sign-up form's own fields, for everyone on the project. A custom field, or the standard Company, First name, Last name or Full name field, can be turned off, and a box whose field is off stays empty. The agent saves, removes or switches one only when you ask or agree; where only the project's leads change them, it asks a lead instead |
 | `add_site`, `save_signup_screen`, `remove_signup_screen`, `set_multi_step` | Adds a staging, dev or local site to the project (never one that looks live, which you add in the app), a site's list of sign-up screens (pages, or a native app's screens), and whether Proxy Mail QA for Chrome 0.9.0 and later fills each new screen of a sign-up there by itself. Adding a site never gives Chrome access: you allow that once, from Proxy Mail QA for Chrome on the site. The agent changes them only when you ask or agree; where only the project's leads change sites, it asks a lead instead |
 | `list_form_sections`, `get_form_section` | The field sections a sign-up form may ask for (person, account, business and documents), with labels in nine languages and where each value comes from. For an ID or tax number in a given country: its format and, where it's safe, a made-up value that follows it and never matches a real person, with values the form should accept or refuse. A passport defaults to Utopia, ICAO's fictional state, with its machine-readable lines. `kyc_sandbox` adds a KYC vendor's own published sandbox values, for that vendor's test mode |
@@ -121,7 +121,7 @@ paste its setup block into your agent.
 | `get_signup_form_code`, `get_signup_form_test` | A saved form as code for your app (React with react-hook-form and zod, plain React, or one HTML page), each field checking what the form asks for and carrying the `data-testid` its custom fields find it by; and Playwright or Cypress tests that try, one field at a time, values the form should take and values it should refuse, with every other field filled in from a new test address |
 | `get_flow_checks` | The checks to run on a sign-up, password reset or magic-link flow beyond the email arriving: a wrong code refused, a code or link working only once, only the newest one working, an expired one refused, the link in another browser, surviving a mail scanner, no second account for the same address, and a second person unable to see the first one's data. Each has steps and what to expect; the agent runs them through your app as a person would, never its database |
 | `get_journey` | A site's journey, as the Journeys page draws it: the emails the project's test accounts got from it, in order, with how many got each one, the wait before it, who is still due it and who didn't get it, its warnings, and where accounts took different paths, each with the `filter` that shows it alone, to pass back as it is. Filters by `country`, `age`, `any_tags`, one `address`, and the steps an account got or didn't (`got_step`, `not_got_step`); `phase` keeps one phase's steps. Steps are named by kind, sender and key, never by subject, and the answer links to the page on the same view |
-| `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect; attachments inboxes block (`harmful_attachment`) and an estimate of whether it lands in spam (`spam_risk`). Verdicts only, never the email |
+| `check_email` | Checks an email that arrived: SPF, DKIM and DMARC, links to localhost or plain http, where its link goes, a stated expiry or coupon end date, its size, whether it fits a phone, and the text, language and attachments you expect; attachments inboxes block (`harmful_attachment`) and an estimate of whether it lands in spam (`spam_risk`, with an inbox score out of 10, where 10 is good). Verdicts only, never the email |
 | `count_emails`, `expect_no_email` | How many emails arrived (to catch duplicates), and a check that nothing arrives (`until` for up to an hour); `category: marketing` looks at marketing email only |
 | `check_sequence` | Whether a welcome series or drip campaign came in order and on time after sign-up: pass, early, late, missing or waiting for each email |
 | `record_consent` | What an account agreed to at sign-up, so `check_email` judges its marketing by the rules where the persona lives (EU and EEA, UK, US, Canada, Australia, New Zealand, Switzerland, Japan, South Korea, Singapore and Hong Kong) |
@@ -131,12 +131,21 @@ paste its setup block into your agent.
 | `check_out_account`, `extend_checkout`, `return_account` | Borrow a test account in a known state that no other test has, hold it longer if needed, and give it back |
 | `start_run`, `add_run_note`, `finish_run` | Record a session as a run, each call naming its step (`test`); `finish_run` returns the report in Markdown for a pull request, compared with the last runs of the same name |
 
-The marketing and offer tools (`record_coupon_result`, `check_offers`,
-`mark_unsubscribed`, `mark_resubscribed`, `check_unsubscribe`, `record_consent`,
-`check_sequence`), the marketing checks, and the spam score and attachment
-checks are in Labs for now: switch on **Marketing and offer emails** and **Spam
-score and attachment checks** in the Proxy Mail QA app under Account settings →
-Labs. `get_journey` is part of Journeys, switched on in the same place. Until then those tools answer with an error that says so.
+The coupon tools (`record_coupon_result`, `check_offers`) and their prompts are
+listed when the project tests **Offers**, and the unsubscribe, consent and
+sequence tools (`mark_unsubscribed`, `mark_resubscribed`, `check_unsubscribe`,
+`record_consent`, `check_sequence`) and theirs when it tests **Marketing**;
+`check_email`'s coupon and marketing checks come with either. The spam checks
+(`spam_risk`, with its inbox score, and `harmful_attachment`) follow the
+project's **Spam checks** switch. Choose both in the Proxy Mail QA app under
+Project settings → What you test, or ask the agent: `update_project` takes
+`areas` and `spam_checks` and needs the project's lead. The agent sees a change
+the next time it connects. A project made without choosing tests Sign-up and
+Receipts, with its spam checks on.
+
+`get_journey` is part of Journeys, still in Labs: the person who connected the
+agent switches it on in the app under Account settings → Labs. Until then it
+isn't listed.
 
 Prompts, ready-made checklists, in clients that show MCP prompts: `test_signup_flow`, `test_password_reset`,
 `test_sign_in_code`, `prepare_account` (an account confirmed to be in the state
